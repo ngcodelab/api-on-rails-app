@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   
   # Routes for API
-  namespace :api, defaults: { format: :json }, path: '/'  do
+  namespace :api, defaults: { format: :json }  do
     resources :users, only: [:show]
   end
   
