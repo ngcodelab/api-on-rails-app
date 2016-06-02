@@ -1,4 +1,5 @@
 class Api::UsersController < ApplicationController
+  before_action :authenticate_with_token!, only: [:update, :destroy]
   respond_to :json
   
   def show
@@ -16,6 +17,27 @@ class Api::UsersController < ApplicationController
       render json: {errors: user.errors}, status: 422
     end
   end
+  
+  
+  def update
+    user = current_user
+    if user.update(user_params)
+      render json: user, status: 200, location: [:api, user]
+    else
+      render json: {errors: user.errors}, status: 422
+    end
+  end
+  
+  def destroy
+    current_user.destroy
+    # HTTP status 204 signifies 'No Content' which means
+    # The server successfully processed the request and is
+    # not returning any content.
+    # The following statement just send back header in the 
+    # response with status 204.
+    head 204
+  end
+  
   
   
   private
