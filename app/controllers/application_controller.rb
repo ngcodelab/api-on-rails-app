@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   
   # this 'null_session' configuration is required for POST/PUT/DELETE requests to work
   protect_from_forgery with: :null_session
+  include Authenticable
   
   def index
     render text: "Hello there!"
